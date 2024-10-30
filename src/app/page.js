@@ -1,4 +1,4 @@
-"use client"; // Keep this line
+"use client"; 
 
 import { useEffect, useState } from 'react';
 import ForecastContainer from './components/sixMonths';
@@ -14,10 +14,18 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ textAlign: 'left', marginTop: '50px' }}>
-      <h1 style={{ fontSize: '2rem' }}>Water Consumption Forecast for {date}</h1>
-      <ForecastContainer />
-      <WeeklyForecast />
+    <div style={{ textAlign: 'left', marginTop: '50px', padding: '20px' }}>
+      <h1 style={{ fontSize: '2rem', marginBottom: '20px' }}>Water Consumption Forecast for {date}</h1>
+      
+      <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ flex: '1', minWidth: '200px' }}>
+          <ForecastContainer />
+        </div>
+
+        <div style={{ flex: '4', minWidth: '400px' }}>
+          <WeeklyForecast />
+        </div>
+      </div>
     </div>
   );
 };

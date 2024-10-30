@@ -42,14 +42,15 @@ const WeeklyForecast = () => {
       y: { beginAtZero: false },
       x: { beginAtZero: false },
     },
+    maintainAspectRatio: false,
   };
 
   return (
-    <div style={{ padding: '16px', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <h2 style={{ margin: 0 }}>Forecast Graph</h2>
+    <div style={{ padding: '16px', border: '1px solid #ddd', borderRadius: '8px', backgroundColor: '#f5f5f5', height: '300px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+        <h2 style={{ margin: 0, fontSize: '1rem' }}>Forecast Graph</h2>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <label>Select Date </label>
+          <label style={{ marginRight: '8px' }}>Select Date</label>
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
@@ -57,13 +58,15 @@ const WeeklyForecast = () => {
             className="datepicker"
           />
         </div>
-        <div>
+        <div style={{ fontSize: '0.9rem' }}>
           {`${selectedDate.toLocaleDateString()} - ${
             new Date(selectedDate.getTime() + 6 * 24 * 60 * 60 * 1000).toLocaleDateString()
           }`}
         </div>
       </div>
-      <Line data={data} options={options} />
+      <div style={{ height: '200px' }}> {/* Adjusted height for the chart */}
+        <Line data={data} options={options} />
+      </div>
     </div>
   );
 };
