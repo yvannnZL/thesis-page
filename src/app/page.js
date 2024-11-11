@@ -16,6 +16,16 @@ const Home = () => {
   return (
     <div style={{ textAlign: 'left', marginTop: '50px', padding: '20px' }}>
       <h1 style={{ fontSize: '2rem', marginBottom: '20px' }}>Water Consumption Forecast for {date}</h1>
+
+      <div style={{ display: 'flex', gap: '20px', marginBottom: '50px' }}>
+        <div style={{ flex: '1', minWidth: '200px' }}>
+          <h1 style={{ fontSize: '1rem', }}> Today's Forecast </h1>
+        </div>
+
+        <div style={{ flex: '4', minWidth: '400px' }}>
+          <h1 style={{ fontSize: '1rem', }}> Last Month's Water Consumption </h1>
+        </div>
+      </div>
       
       <div style={{ display: 'flex', gap: '20px' }}>
         <div style={{ flex: '1', minWidth: '200px' }}>
