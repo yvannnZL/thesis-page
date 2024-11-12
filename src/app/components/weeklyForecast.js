@@ -18,13 +18,12 @@ const WeeklyForecast = () => {
     setXAxisLabels(labels);
   }, [selectedDate]);
 
-  // Dummy data for the graph with empty values for now
   const data = {
     labels: xAxisLabels,
     datasets: [
       {
         label: 'Water Consumption',
-        data: Array(7).fill(null), // Empty data array
+        data: Array(7).fill(null), 
         fill: true,
         backgroundColor: 'rgba(255, 206, 86, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
