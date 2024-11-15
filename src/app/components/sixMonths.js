@@ -6,7 +6,7 @@ const ForecastContainer = () => {
   const nextSixMonths = Array.from({ length: 6 }, (_, i) => monthNames[(today.getMonth() + i) % 12]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', padding: '16px', border: '1px solid #ddd', borderRadius: '8px', height: '300px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', padding: '16px', border: '1px solid #ddd', borderRadius: '8px', height: '300px', backgroundColor: '#f5f5f5' }}>
       <h2 style={{ fontSize: '1rem', marginBottom: '8px' }}>Monthly Forecast</h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
         <div><strong>Month</strong></div>
