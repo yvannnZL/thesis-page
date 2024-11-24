@@ -6,6 +6,7 @@ import WeeklyForecast from './components/weeklyForecast';
 
 const Home = () => {
   const [date, setDate] = useState('');
+  const [selectedYear, setSelectedYear] = useState(2023); // Shared state for the selected year
 
   useEffect(() => {
     const today = new Date();
@@ -14,28 +15,22 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ textAlign: 'left', marginTop: '50px', padding: '50px' }}>
-      <strong>
-        <h1 style={{ fontSize: '2rem', marginBottom: '20px' }}>Water Consumption Forecast for {date}</h1>
-      </strong>
+    <div style={{ minHeight: '100vh', backgroundColor: '#d6dad9'}}>
+      <div style={{ textAlign: 'left', padding: '50px', }}>
+        <strong>
+          <h1 style={{ fontSize: '2.5rem'}}>Water Consumption History and Forecast in Davao City</h1>
+          
+        </strong>
+        <h4 style={{ marginBottom: '20px' }}>{date}</h4>
+        
+        <div style={{ display: 'flex', gap: '20px' }}>
+          <div style={{ flex: '1', minWidth: '200px' }}>
+            <ForecastContainer selectedYear={selectedYear} />
+          </div>
 
-      <div style={{ display: 'flex', gap: '20px', marginBottom: '50px' }}>
-        <div style={{ flex: '1', minWidth: '200px' }}>
-          <h1 style={{ fontSize: '1rem', }}> Today's Forecast </h1>
-        </div>
-
-        <div style={{ flex: '4', minWidth: '400px' }}>
-          <h1 style={{ fontSize: '1rem', }}> Last Month's Water Consumption </h1>
-        </div>
-      </div>
-      
-      <div style={{ display: 'flex', gap: '20px' }}>
-        <div style={{ flex: '1', minWidth: '200px' }}>
-          <ForecastContainer />
-        </div>
-
-        <div style={{ flex: '4', minWidth: '400px' }}>
-          <WeeklyForecast />
+          <div style={{ flex: '2', minWidth: '400px' }}>
+            <WeeklyForecast selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
+          </div>
         </div>
       </div>
     </div>
