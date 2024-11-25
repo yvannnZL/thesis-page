@@ -10,22 +10,19 @@ const YearlyForecast = ({ selectedYear, setSelectedYear }) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-
+    
       try {
         const historicalResponse = await fetch(`/api/historical/byYear?year=${selectedYear}`);
         const historicalData = await historicalResponse.json();
-      
+    
         let predictedData = [];
         if (selectedYear === 2023) {
           const predictedResponse = await fetch('/api/prediction');
           predictedData = await predictedResponse.json();
-          
-          predictedData = predictedData
-            .filter((item) => new Date(item.date).getFullYear() === 2023)
-            .slice(0, 12);
-          console.log('Data after limiting to February–December:', predictedData);
+    
+          predictedData = predictedData.filter((item) => new Date(item.date).getFullYear() === 2023);
         }
-      
+    
         const typeMap = {
           Residential: 'residential_monthly_average',
           Commercial: 'commercial_monthly_average',
@@ -38,38 +35,39 @@ const YearlyForecast = ({ selectedYear, setSelectedYear }) => {
           Government: 'predicted_government_monthly_average',
           Total: 'predicted_monthly_consumption',
         };
-        
+    
         const typeKey = typeMap[selectedType];
         const predictedTypeKey = predictedTypeMap[selectedType];
-      
-        const historicalMonthlyData = Array(12).fill(0);
+    
+        const historicalMonthlyData = Array(12).fill(null); 
         historicalData.forEach((item) => {
-          const month = new Date(item.date).getMonth(); 
-          historicalMonthlyData[month] = item[typeKey] || 0;
+          const month = new Date(item.date).getMonth();
+          historicalMonthlyData[month] = item[typeKey] || null; 
         });
-      
-        const predictedMonthlyData = Array(12).fill(null); 
+    
+        const predictedMonthlyData = Array(12).fill(null);
         predictedData.forEach((item) => {
           const month = new Date(item.date).getMonth();
-          predictedMonthlyData[month] = item[predictedTypeKey] || 0;
+          predictedMonthlyData[month] = item[predictedTypeKey] || null;
         });
-      
+    
+        // Adjust historical data for 2023 to ensure it connects to predicted data
         const combinedMonthlyData = historicalMonthlyData.map((value, index) =>
-          index < 1 ? value : predictedMonthlyData[index] || value
+          value !== null ? value : predictedMonthlyData[index]
         );
-      
+    
         setChartData({
           historical: historicalMonthlyData,
           predicted: predictedMonthlyData,
-          combined: combinedMonthlyData, 
+          combined: combinedMonthlyData,
         });
-      
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     };
+    
 
     fetchData();
   }, [selectedYear, selectedType]);
@@ -81,7 +79,7 @@ const YearlyForecast = ({ selectedYear, setSelectedYear }) => {
         label: `${selectedType} (Historical Data)`,
         data: chartData.historical,
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)', 
+        borderColor: 'rgba(54, 162, 235, 1)', 
         tension: 0.4,
       },
       ...(selectedYear === 2023
@@ -111,11 +109,12 @@ const YearlyForecast = ({ selectedYear, setSelectedYear }) => {
   return (
     <div
       style={{
-        padding: '32px',
+        padding: '16px',
         border: '1px solid #ddd',
         borderRadius: '8px',
         backgroundColor: '#e9ecee',
-        height: '500px'
+        height: '350px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -150,7 +149,7 @@ const YearlyForecast = ({ selectedYear, setSelectedYear }) => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div style={{ height: '400px' }}>
+        <div style={{ height: '250px' }}>
           <Line data={data} options={options} />
         </div>
       )}
